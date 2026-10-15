@@ -1,0 +1,91 @@
+{
+  "project_title": "VORTEX CLOUD GAMING (Cloud Gaming Platform)",
+  "design_archetype": "THE PERFORMANCE PRO x ELECTRIC NEON (Tactical Obsidian & Cyber Cyan)",
+  "color_palette": {
+    "background_primary": "#0A0C10",
+    "background_secondary": "#121620",
+    "background_card": "#181D2A",
+    "background_card_hover": "#202738",
+    "surface_glass": "rgba(18, 22, 32, 0.75)",
+    "primary_cyan": "#00F0FF",
+    "accent_amber": "#FF9F0A",
+    "accent_violet": "#A855F7",
+    "accent_emerald": "#10B981",
+    "destructive_red": "#EF4444",
+    "text_primary": "#F1F5F9",
+    "text_secondary": "#94A3B8",
+    "text_muted": "#64748B",
+    "border_subtle": "rgba(255, 255, 255, 0.08)",
+    "border_glow": "rgba(0, 240, 255, 0.3)"
+  },
+  "typography": {
+    "heading_font": "Barlow Condensed, Outfit, sans-serif",
+    "body_font": "Inter, DM Sans, sans-serif",
+    "mono_font": "JetBrains Mono, monospace",
+    "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight",
+    "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-extrabold uppercase tracking-tight",
+    "h3_card": "text-xl sm:text-2xl font-bold tracking-normal",
+    "body_main": "text-base font-normal leading-relaxed text-slate-300",
+    "hud_stats": "font-mono text-xs sm:text-sm font-semibold tracking-wider uppercase text-cyan-400"
+  },
+  "layout_and_spacing": {
+    "philosophy": "Generous Spacing System with Bento Grid & Mobile-First High Responsiveness",
+    "container_padding": "px-4 sm:px-8 lg:px-12 py-6 sm:py-10",
+    "bento_grid_marketing": "grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 lg:gap-8",
+    "game_catalog_grid": "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6",
+    "hud_overlay_layout": "absolute inset-0 z-30 pointer-events-none p-4 flex flex-col justify-between"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-slate-900/80 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
+    "glowing_borders": "border border-cyan-500/30 shadow-[0_0_15px_rgba(0,240,255,0.15)] hover:border-cyan-400 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)] transition-all duration-300",
+    "scanline_effect": "bg-[linear-gradient(rgba(18,22,32,0)_50%,rgba(0,0,0,0.4)_50%)] bg-[length:100%_4px]",
+    "stat_badge": "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-cyan-950/60 text-cyan-400 border border-cyan-500/30"
+  },
+  "key_features_and_views": {
+    "landing_page": "Hero section with background video/canvas starfield, performance benchmarks (low latency <15ms, 4K 120FPS, instant play), catalog teaser, server nodes map.",
+    "dashboard_home": "Featured game hero carousel, Recently Played, Recommended Games, Live Server Node Ping widget, Active Cloud Saves indicator.",
+    "game_catalog": "Filterable/searchable library of PC titles (Elden Ring, God of War Ragnarok, Cyberpunk 2077, Black Myth Wukong, etc.) with game tags, metacritic rating, cloud save status, and 'Play Now' trigger.",
+    "my_library": "User's saved games, total hours played, quick launch buttons, favorite titles.",
+    "active_game_session": "Mocked video stream player with responsive touch controls overlay (for mobile: virtual D-pad + action buttons; for desktop: keyboard/gamepad indicator), expandable HUD panel (FPS: 60/120, Ping: 14ms, Bitrate: 45Mbps, Resolution: 4K HDR), full-screen toggle, stream quality switcher, and Quick Save trigger.",
+    "server_node_status": "Interactive server node selection (São Paulo, Virginia, Frankfurt, Tokyo) showing CPU/GPU utilization (RTX 4090 rig nodes), queue length (0 or instant), network jitter, and ping latency test.",
+    "cloud_saves_manager": "Detailed list of cloud save slots per game with thumbnail screenshots, timestamp, save file size, sync status, and restore/download/delete options.",
+    "user_profile_and_billing": "Subscription tier card (Free Trial / Pro Pass / Ultra Rig tier), session timer, controller mapping settings, audio/video streaming config (codec: AV1/H.265)."
+  },
+  "component_strategy": {
+    "shadcn_usage": "Use Shadcn Dialog for game detail modals, Tabs for category switching, DropdownMenu for stream settings, Progress for server load & downloading, Slider for video bitrate/volume, Toast (Sonner) for save sync notifications.",
+    "custom_components": "StreamPlayer (with interactive HUD & touch overlay), ServerNodeRadar (animated ping pinging), GameCard (hover zoom with glowing play badge), SaveStateCard (with state snapshot thumbnail)."
+  },
+  "image_urls": {
+    "hero_cyberpunk": "https://images.unsplash.com/photo-1771014846919-3a1cf73aeea1?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "hero_warrior": "https://images.unsplash.com/photo-1774060526589-ef13301f6e17?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "elden_ring_character": "https://images.unsplash.com/photo-1774060526585-19be7b4af255?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "dark_knight_campfire": "https://images.unsplash.com/photo-1773216344341-e5ca0a1f0df9?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "red_warrior_menacing": "https://images.unsplash.com/photo-1776557819088-b8da598348c8?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "statue_warrior": "https://images.unsplash.com/photo-1769221909918-8d40bf8c2459?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "server_room_datacenter": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "server_lights_grid": "https://images.unsplash.com/photo-1561233835-f937539b95b9?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "gaming_mouse_rgb": "https://images.unsplash.com/photo-1766601269332-6f012c9e80f9?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "gaming_laptop_rgb": "https://images.unsplash.com/photo-1771014817844-327a14245bd1?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "icon_library_recommendation": "@heroicons/react and lucide-react",
+  "testing_strategy": {
+    "rule": "Every button, link, tab, input, and state display MUST include a clear `data-testid` attribute in kebab-case.",
+    "examples": [
+      "data-testid=\"nav-game-catalog-link\"",
+      "data-testid=\"launch-game-button-elden-ring\"",
+      "data-testid=\"game-hud-fps-indicator\"",
+      "data-testid=\"server-node-select-saopaulo\"",
+      "data-testid=\"cloud-save-item-slot-1\"",
+      "data-testid=\"stream-quality-select\""
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Build a complete Portuguese & English supported cloud gaming web platform called 'VORTEX CLOUD GAMING'.",
+    "Theme must be dark (#0A0C10 base) with high-contrast cyan (#00F0FF) and amber (#FF9F0A) accents.",
+    "Implement mock state for active sessions: user can click 'JOGAR AGORA' on any game -> opens immersive game streaming view with video canvas/placeholder, real-time animated HUD (FPS fluctuation, ping latency spikes/drops, bitrate counter), and touch gamepad overlay toggles.",
+    "Implement cloud save persistence in local state / mock API so users can create, load, and delete saved states for games like Elden Ring and God of War Ragnarok.",
+    "Ensure smooth navigation between Home, Catalog, My Library, Server Status, Cloud Saves, and User Subscription Profile.",
+    "Make mobile touch experience a priority: add virtual gamepad overlay when playing on small screen breakpoint.",
+    "Use data-testid on all interactive elements without exception."
+  ]
+}
