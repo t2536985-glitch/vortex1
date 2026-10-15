@@ -101,7 +101,7 @@ export default function StreamSession() {
 
   const quickSave = async () => {
     if (!data?.session) return;
-    await api.post("/saves", { game_id: data.session.game_id, label: `Save rápido ${fmtTime(elapsed)}` });
+    await api.post("/saves", { game_id: data.session.game_id, label: `Save rápido ${fmtTime(elapsed)}`, session_id: data.session.id });
     toast.success("Progresso salvo na nuvem ☁️");
   };
 

@@ -14,7 +14,7 @@ from typing import List, Optional, Annotated
 import bcrypt
 import jwt
 from bson import ObjectId
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, WebSocket, WebSocketDisconnect
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, BeforeValidator, ConfigDict
@@ -106,6 +106,7 @@ class StartSessionInput(BaseModel):
 class CreateSaveInput(BaseModel):
     game_id: str
     label: Optional[str] = None
+    session_id: Optional[str] = None
 
 
 # ----------------------------------------------------------------------------
@@ -400,6 +401,32 @@ async def end_session(session_id: str, user: dict = Depends(get_current_user)):
     return {"ok": True}
 
 
+@api_router.get("/sessions/history")
+async def sessions_history(user: dict = Depends(get_current_user)):
+    docs = await db.sessions.find({"user_id": user["_id"]}, {"_id": 0}).sort("started_at", -1).to_list(500)
+    games_by_id = {g["id"]: g for g in await db.games.find({}, {"_id": 0}).to_list(1000)}
+    nodes_by_id = {n["id"]: n for n in await db.nodes.find({}, {"_id": 0}).to_list(1000)}
+    out = []
+    for d in docs:
+        g = games_by_id.get(d["game_id"])
+        n = nodes_by_id.get(d["node_id"])
+        start = datetime.fromisoformat(d["started_at"])
+        end = datetime.fromisoformat(d["ended_at"]) if d.get("ended_at") else datetime.now(timezone.utc)
+        duration = int((end - start).total_seconds())
+        saves = await db.saves.find({"user_id": user["_id"], "session_id": d["id"]}, {"_id": 0}).to_list(100)
+        out.append({
+            "id": d["id"],
+            "active": d.get("active", False),
+            "started_at": d["started_at"],
+            "ended_at": d.get("ended_at"),
+            "duration_seconds": duration,
+            "game": {"id": g["id"], "title": g["title"], "cover": g["cover"]} if g else None,
+            "node": {"id": n["id"], "name": n["name"], "flag": n["flag"], "gpu": n["gpu"]} if n else None,
+            "saves": [{"id": s["id"], "label": s["label"]} for s in saves],
+        })
+    return out
+
+
 # ----------------------------------------------------------------------------
 # Cloud Saves
 # ----------------------------------------------------------------------------
@@ -429,6 +456,7 @@ async def create_save(payload: CreateSaveInput, user: dict = Depends(get_current
            "size_mb": random.randint(8, 240),
            "thumbnail": game["hero"],
            "sync_status": "synced",
+           "session_id": payload.session_id,
            "created_at": datetime.now(timezone.utc).isoformat()}
     await db.saves.insert_one(doc)
     return {k: v for k, v in doc.items() if k != "_id"}
@@ -473,6 +501,55 @@ async def startup():
         await db.users.update_one({"email": admin_email},
                                   {"$set": {"password_hash": hash_password(admin_password)}})
     logger.info("Vortex seed complete")
+
+
+# ----------------------------------------------------------------------------
+# WebRTC Signaling (real peer-to-peer screen stream demo)
+# ----------------------------------------------------------------------------
+class SignalRooms:
+    def __init__(self):
+        self.rooms: dict = {}
+
+    async def join(self, room: str, ws: WebSocket):
+        self.rooms.setdefault(room, set()).add(ws)
+
+    def leave(self, room: str, ws: WebSocket):
+        if room in self.rooms:
+            self.rooms[room].discard(ws)
+            if not self.rooms[room]:
+                self.rooms.pop(room, None)
+
+    async def broadcast(self, room: str, sender: WebSocket, message: str):
+        for peer in list(self.rooms.get(room, set())):
+            if peer is not sender:
+                try:
+                    await peer.send_text(message)
+                except Exception:
+                    pass
+
+    def count(self, room: str) -> int:
+        return len(self.rooms.get(room, set()))
+
+
+signal_rooms = SignalRooms()
+
+
+@api_router.websocket("/ws/signal/{room}")
+async def signal_ws(websocket: WebSocket, room: str):
+    await websocket.accept()
+    await signal_rooms.join(room, websocket)
+    # tell the newcomer how many peers are already here and notify others
+    await websocket.send_text(f'{{"type":"joined","peers":{signal_rooms.count(room)}}}')
+    await signal_rooms.broadcast(room, websocket, '{"type":"peer-joined"}')
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await signal_rooms.broadcast(room, websocket, data)
+    except WebSocketDisconnect:
+        pass
+    finally:
+        signal_rooms.leave(room, websocket)
+        await signal_rooms.broadcast(room, websocket, '{"type":"peer-left"}')
 
 
 app.include_router(api_router)

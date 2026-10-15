@@ -15,6 +15,8 @@ import ServerStatus from "@/pages/ServerStatus";
 import CloudSaves from "@/pages/CloudSaves";
 import Profile from "@/pages/Profile";
 import StreamSession from "@/pages/StreamSession";
+import History from "@/pages/History";
+import WebrtcDemo from "@/pages/WebrtcDemo";
 import { Loader2 } from "lucide-react";
 
 function FullLoader() {
@@ -63,8 +65,10 @@ function App() {
             <Route path="/app" element={<AppShell><Dashboard /></AppShell>} />
             <Route path="/app/catalog" element={<AppShell><Catalog /></AppShell>} />
             <Route path="/app/library" element={<AppShell><Library /></AppShell>} />
+            <Route path="/app/history" element={<AppShell><History /></AppShell>} />
             <Route path="/app/servers" element={<AppShell><ServerStatus /></AppShell>} />
             <Route path="/app/saves" element={<AppShell><CloudSaves /></AppShell>} />
+            <Route path="/app/webrtc" element={<AppShell><WebrtcDemo /></AppShell>} />
             <Route path="/app/profile" element={<AppShell><Profile /></AppShell>} />
 
             <Route

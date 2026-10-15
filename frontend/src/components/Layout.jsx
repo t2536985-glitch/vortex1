@@ -12,6 +12,8 @@ import {
   Zap,
   Menu,
   X,
+  History,
+  Radio,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -19,8 +21,10 @@ const NAV = [
   { to: "/app", label: "Início", icon: LayoutDashboard, end: true, id: "dashboard" },
   { to: "/app/catalog", label: "Catálogo", icon: Gamepad2, id: "catalog" },
   { to: "/app/library", label: "Biblioteca", icon: Library, id: "library" },
+  { to: "/app/history", label: "Histórico", icon: History, id: "history" },
   { to: "/app/servers", label: "Servidores", icon: Server, id: "servers" },
   { to: "/app/saves", label: "Saves na Nuvem", icon: Cloud, id: "saves" },
+  { to: "/app/webrtc", label: "Stream Real · Demo", icon: Radio, id: "webrtc" },
   { to: "/app/profile", label: "Perfil", icon: User, id: "profile" },
 ];
 
