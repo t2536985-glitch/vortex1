@@ -30,7 +30,9 @@ Usuário (PT-BR) quer um "cloud gaming" com servidor próprio para jogar jogos d
 - O vídeo do jogo é SIMULADO (imagem estática + métricas sintéticas). Não há GPU/stream real nem jogos reais licenciados — inviável tecnicamente/legalmente neste ambiente.
 
 ## Backlog / próximos passos
-- P1: Watch party / co-op, histórico de sessões, conquistas.
+- Histórico de Sessões (FEITO 2026-06): timeline com jogo, servidor, duração e saves criados (/app/history, GET /api/sessions/history).
+- Protótipo WebRTC real (FEITO 2026-06): /app/webrtc — screen share P2P de verdade (getDisplayMedia + RTCPeerConnection + sinalização WebSocket /api/ws/signal/{room} + STUN). Host = navegador deste PC; viewer = celular via link. Falta TURN para NATs difíceis.
+- P1: Watch party / co-op, conquistas.
 - P1: Teste real de ping do navegador até os nós.
 - P2: CORS explícito por origem + brute-force lockout no login para produção.
-- P2: Protótipo real de WebRTC transmitindo tela de uma máquina (jogo livre).
+- P2: Adicionar servidor TURN (coturn) ao demo WebRTC; integrar Moonlight/Sunshine ou GPU cloud (AWS g4/g5, Paperspace) para rodar jogos reais.
